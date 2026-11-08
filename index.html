@@ -58,7 +58,7 @@ function setPhase(n,now){
   }
   if(n===4)textStart=now;
 }
-addEventListener('pointerdown',()=>{if(phase>=3)setPhase(2,performance.now());});
+addEventListener('pointerdown',()=>{if(phase!==2)setPhase(2,performance.now());});
 
 function drawText(a){
   const size=S*2.5;
@@ -104,12 +104,7 @@ function frame(now){
   }
   ctx.globalAlpha=1;
 
-  let ta=0;
-  if(phase===0)ta=Math.min(1,el/1200);
-  else if(phase===1)ta=1;
-  else if(phase===2)ta=Math.max(0,1-el/700);
-  else if(phase===4)ta=Math.min(1,(now-textStart)/1500);
-  if(ta>0)drawText(ta);
+  drawText(Math.min(1,now/1200));
   requestAnimationFrame(frame);
 }
 requestAnimationFrame(frame);
